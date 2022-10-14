@@ -1,22 +1,4 @@
-CREATE TABLE Library.Book (
-	IDBook INT NOT NULL,
-	Price FLOAT NOT NULL,
-	Author varchar(255) NOT NULL,
-	Editor varchar(255) NOT NULL,
-	Title varchar(255) NOT NULL,
-	DateOfPublication DATE NOT NULL,
-	ISBN CHAR(13) NULL,
-	CONSTRAINT Book_pk PRIMARY KEY (IDBook)
-)
-ENGINE=InnoDB
-DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_0900_ai_ci;
-
-CREATE TABLE Library.`User` (
-	CFUser CHAR(16) NOT NULL,
-	Name varchar(255) NULL,
-	Surname varchar(255) NULL,
-	BirthDate DATE NULL,
+BirthDate DATE NULL,
 	CONSTRAINT User_pk PRIMARY KEY (CFUser)
 )
 ENGINE=InnoDB
@@ -32,6 +14,17 @@ CREATE TABLE Library.Loan (
 	CONSTRAINT Loan_pk PRIMARY KEY (IDLoan),
 	CONSTRAINT Loan_FK FOREIGN KEY (IDBook) REFERENCES Library.book(IDBook),
 	CONSTRAINT Loan_FK_1 FOREIGN KEY (CFUser) REFERENCES Library.`user`(CFUser)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE Library.WrittenBy (
+	IDAuthor INT NOT NULL,
+	IDBook INT NOT NULL,
+	CONSTRAINT WrittenBy_pk PRIMARY KEY (IDAuthor,IDBook),
+	CONSTRAINT WrittenBy_FK FOREIGN KEY (IDBook) REFERENCES Library.book(IDBook),
+	CONSTRAINT WrittenBy_FK_1 FOREIGN KEY (IDAuthor) REFERENCES Library.Author(IDAuthor)
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
